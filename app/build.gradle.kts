@@ -12,8 +12,8 @@ android {
         applicationId = "com.nalar.reroll"
         minSdk = 26
         targetSdk = 35
-        versionCode = 8
-        versionName = "0.4.4"
+        versionCode = 9
+        versionName = "0.5.0"
     }
 
     buildFeatures {
@@ -31,12 +31,13 @@ android {
     }
 }
 
-// v0.4.4 source patch:
+// v0.5.0 source patch:
 // - retain equal-width Energy chips and extended Clock-out choices
-// - add Seek Job to setup/profile UI and category styling
-// - route the randomizer through ActivityLibraryV3 (60 Seek Job activities)
+// - keep Seek Job in setup/profile UI and category styling
+// - route the randomizer through ActivityLibraryV3
 // - include Seek Job inside Mixed mode
-val patchV044Sources by tasks.registering {
+// - quick-launch one-tap flow is implemented directly in MainActivity + QuickLaunchOverlay.kt
+val patchV050Sources by tasks.registering {
     doLast {
         val ui = file("src/main/java/com/nalar/reroll/AppUi.kt")
         val core = file("src/main/java/com/nalar/reroll/Core.kt")
@@ -91,7 +92,7 @@ val patchV044Sources by tasks.registering {
                 "\"Pilih mode aktivitas utama hari ini.\""
             )
 
-            code = code.replace("Text(\"v0.4\"", "Text(\"v0.4.4\"")
+            code = code.replace("Text(\"v0.4\"", "Text(\"v0.5.0\"")
 
             check(code.contains("modifier = Modifier.weight(1f), selected = energy == it")) {
                 "Energy chip fix did not apply"
@@ -139,7 +140,7 @@ val patchV044Sources by tasks.registering {
 
 tasks.configureEach {
     if (name.startsWith("compile") && name.endsWith("Kotlin")) {
-        dependsOn(patchV044Sources)
+        dependsOn(patchV050Sources)
     }
 }
 
