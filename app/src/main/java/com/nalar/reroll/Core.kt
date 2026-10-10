@@ -42,146 +42,79 @@ data class UserProfile(
     val notificationsEnabled: Boolean = true
 )
 
-private val activityPools = mapOf(
-    "Career" to listOf(
-        "Cari 5 lowongan yang benar-benar relevan",
-        "Apply 2 lowongan dengan kecocokan tertinggi",
-        "Sesuaikan CV untuk satu job description",
-        "Rapikan headline dan About LinkedIn",
-        "Kirim pesan ke 3 recruiter atau alumni",
-        "Latihan 5 pertanyaan interview",
-        "Riset 3 perusahaan target",
-        "Follow-up lamaran yang sudah 5–10 hari",
-        "Tulis ulang 3 bullet CV supaya lebih kuat",
-        "Buat cover letter untuk satu perusahaan",
-        "Cari lowongan remote atau hybrid",
-        "Tambah satu work sample ke portfolio",
-        "Ambil keyword penting dari satu job description",
-        "Latihan self-introduction 60 detik",
-        "Latihan jawaban soal gaji dan motivasi",
-        "Cari internship, contract, dan entry-level role",
-        "Kirim satu networking message yang personal",
-        "Update job tracker dan next action",
-        "Cek career page 5 perusahaan incaran",
-        "Latihan cerita pengalaman dengan metode STAR",
-        "Review 3 lowongan dan bandingkan requirement-nya",
-        "Cari satu event networking atau webinar karier",
-        "Tulis 5 pencapaian yang bisa dipakai saat interview",
-        "Cari 10 recruiter di LinkedIn untuk role target",
-        "Bikin daftar 10 perusahaan yang mau dikejar minggu ini"
-    ),
-    "Skill" to listOf(
-        "Latihan Excel atau Google Sheets",
-        "Belajar English for work",
-        "Selesaikan satu lesson course",
-        "Latihan desain presentasi",
-        "Pelajari satu workflow AI praktis",
-        "Tulis satu halaman ringkasan belajar",
-        "Tonton satu tutorial dan catat poin penting",
-        "Latihan Canva atau dasar desain",
-        "Belajar basic data cleaning",
-        "Latihan public speaking 20 menit",
-        "Perbaiki satu contoh tulisan supaya lebih jelas",
-        "Pelajari shortcut yang bisa mempercepat kerja",
-        "Review satu case study di bidangmu",
-        "Pelajari satu formula Excel baru",
-        "Latihan merangkum artikel atau jurnal",
-        "Bikin satu mini exercise dari skill yang dipelajari",
-        "Baca satu artikel dan tulis 5 takeaways",
-        "Deep work 45 menit tanpa notifikasi",
-        "Latihan membuat tabel dan grafik yang rapi",
-        "Belajar dasar project management",
-        "Belajar dasar monitoring dan evaluation",
-        "Latihan menulis email profesional",
-        "Buat mini portfolio project dari skill yang dipelajari",
-        "Belajar satu fitur baru PowerPoint",
-        "Review skill gap untuk role yang kamu incar"
-    ),
-    "Health" to listOf(
-        "Jalan cepat 30–45 menit",
-        "Bodyweight workout",
-        "Lari atau jogging",
-        "Stretching dan mobility",
-        "Jalan santai panjang di luar rumah",
-        "Core workout singkat",
-        "Ikuti beginner home workout",
-        "Recovery stretching dan breathing",
-        "Jalan kaki tanpa HP",
-        "Latihan postur dan punggung",
-        "Quick cardio session",
-        "Bersepeda atau aktivitas fisik ringan",
-        "Workout ringan plus cooldown",
-        "Keluar untuk sunlight dan jalan kaki",
-        "Mobility reset session",
-        "Naik turun tangga atau brisk movement",
-        "Latihan kaki dan keseimbangan",
-        "Jalan 5.000 langkah bertahap",
-        "Upper-body workout ringan",
-        "Lower-body workout ringan",
-        "Yoga atau mobility flow 30 menit",
-        "Hydration break dan stretching singkat"
-    ),
-    "Personal" to listOf(
-        "Rapikan kamar dan reset workspace",
-        "Organize file dan folder download",
-        "Plan besok dan review prioritas",
-        "Baca buku tanpa HP",
-        "Journaling untuk clear the head",
-        "Selesaikan satu life-admin task",
-        "Declutter meja kerja",
-        "Rapikan email inbox",
-        "Atur pengeluaran minggu ini",
-        "Laundry atau clothing reset",
-        "Review kebiasaan dan level energi",
-        "Tulis refleksi singkat hari ini",
-        "Rapikan apps dan notes di HP",
-        "Balas chat atau telepon orang penting",
-        "Siapkan kebutuhan untuk besok",
-        "Rapikan dokumen penting",
-        "Backup file penting ke cloud",
-        "Bereskan satu area rumah yang berantakan",
-        "Buat daftar prioritas minggu ini",
-        "No-phone reset selama 30 menit",
-        "Rapikan foto dan screenshot yang menumpuk",
-        "Cek kalender satu minggu ke depan",
-        "Hapus satu sumber distraksi dari HP",
-        "Rapikan bookmark dan tab browser"
-    ),
-    "Side Hustle" to listOf(
-        "Cari 15 calon klien potensial",
-        "Kirim 10 outreach personal",
-        "Buat satu konten marketing yang berguna",
-        "Improve portfolio atau landing page",
-        "Follow-up warm leads",
-        "Buat before-and-after work sample",
-        "Review pricing, offer, dan conversion",
-        "Minta testimonial ke satu client lama",
-        "Buat satu paket jasa yang lebih jelas",
-        "Desain satu carousel atau promo visual",
-        "Draft ide konten untuk 7 hari",
-        "Riset kompetitor dan positioning mereka",
-        "Update bio dan call-to-action",
-        "Post satu proof-of-work",
-        "Balas semua prospect aktif",
-        "Perbaiki order flow atau contact link",
-        "Buat satu konten edukasi untuk target market",
-        "Buat satu sample slide atau dokumen",
-        "Review channel mana yang paling banyak bawa leads",
-        "Bikin offer khusus first-time client",
-        "Rapikan price list supaya gampang dipahami",
-        "Buat template DM outreach baru",
-        "Cari 5 komunitas tempat calon klien berkumpul",
-        "Audit halaman Instagram atau website jasa",
-        "Bikin satu case study dari project lama",
-        "Buat FAQ sederhana untuk calon klien",
-        "Cari 10 akun yang bisa jadi partnership",
-        "Buat satu konten problem-solution",
-        "Review pesan sales yang paling banyak dibalas",
-        "Buat satu template follow-up client"
-    )
-)
+/**
+ * Keeps activities from appearing again for seven randomizer actions.
+ * An action is one Generate / Re-plan / Reroll click.
+ */
+object RandomizerGuard {
+    const val COOLDOWN_CLICKS = 7
 
-fun poolFor(category: String): List<String> = activityPools[category].orEmpty()
+    var cycle: Int = 0
+        private set
+    var generating: Boolean = false
+        private set
+
+    private val lastUsedCycle = mutableMapOf<String, Int>()
+
+    fun restore(savedCycle: Int, raw: String?) {
+        cycle = savedCycle.coerceAtLeast(0)
+        lastUsedCycle.clear()
+        if (raw.isNullOrBlank()) return
+        runCatching {
+            val obj = JSONObject(raw)
+            val keys = obj.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                lastUsedCycle[key] = obj.optInt(key, -9999)
+            }
+        }
+    }
+
+    fun beginGenerate() {
+        cycle += 1
+        generating = true
+    }
+
+    fun endGenerate() {
+        generating = false
+    }
+
+    fun beginRerollIfNeeded() {
+        if (!generating) cycle += 1
+    }
+
+    fun safeCandidates(pool: List<String>): List<String> {
+        return pool.filter { title ->
+            val last = lastUsedCycle[title]
+            last == null || cycle - last > COOLDOWN_CLICKS
+        }
+    }
+
+    fun leastRecentlyUsed(pool: List<String>, count: Int = 12): List<String> {
+        return pool.sortedBy { lastUsedCycle[it] ?: Int.MIN_VALUE }.take(count.coerceAtMost(pool.size))
+    }
+
+    fun markSelected(titles: Collection<String>) {
+        titles.forEach { title ->
+            if (title.isNotBlank()) lastUsedCycle[title] = cycle
+        }
+    }
+
+    fun snapshotJson(): String {
+        val obj = JSONObject()
+        lastUsedCycle.forEach { (title, usedCycle) -> obj.put(title, usedCycle) }
+        return obj.toString()
+    }
+}
+
+fun poolFor(category: String): List<String> {
+    val fullPool = activityPoolV2(category)
+    if (fullPool.isEmpty()) return emptyList()
+
+    RandomizerGuard.beginRerollIfNeeded()
+    val safe = RandomizerGuard.safeCandidates(fullPool)
+    return if (safe.isNotEmpty()) safe else RandomizerGuard.leastRecentlyUsed(fullPool)
+}
 
 fun formatTime(totalMinutes: Int): String {
     val h = (totalMinutes / 60).coerceIn(0, 23)
@@ -194,12 +127,16 @@ private fun roundUpToQuarter(totalMinutes: Int): Int {
     return if (remainder == 0) totalMinutes else totalMinutes + (15 - remainder)
 }
 
+/**
+ * Mixed really mixes all categories.
+ * A specific focus now stays in that category instead of silently behaving like Mixed.
+ */
 private fun categoriesForFocus(focus: String): List<String> = when (focus) {
-    "Career" -> listOf("Career", "Career", "Skill", "Career", "Health", "Personal")
-    "Skill" -> listOf("Skill", "Career", "Skill", "Health", "Personal", "Side Hustle")
-    "Side Hustle" -> listOf("Side Hustle", "Side Hustle", "Career", "Skill", "Health", "Personal")
-    "Health" -> listOf("Health", "Career", "Skill", "Personal", "Side Hustle")
-    "Personal" -> listOf("Personal", "Career", "Skill", "Health", "Side Hustle")
+    "Career" -> listOf("Career")
+    "Skill" -> listOf("Skill")
+    "Side Hustle" -> listOf("Side Hustle")
+    "Health" -> listOf("Health")
+    "Personal" -> listOf("Personal")
     else -> listOf("Career", "Skill", "Side Hustle", "Health", "Personal")
 }
 
@@ -230,56 +167,84 @@ fun generateDay(
     val end = endHour * 60
     val result = mutableListOf<TaskBlock>()
 
-    if (cursor < end) {
-        val categories = categoriesForFocus(focus)
-        var categoryIndex = random.nextInt(categories.size)
-        var workSinceBreak = 0
-        var lunchAdded = false
-        val usedByCategory = mutableMapOf<String, MutableSet<String>>()
+    RandomizerGuard.beginGenerate()
+    try {
+        if (cursor < end) {
+            val categories = categoriesForFocus(focus)
+            var categoryIndex = if (categories.size > 1) random.nextInt(categories.size) else 0
+            var workSinceBreak = 0
+            var lunchAdded = false
+            val usedByCategory = mutableMapOf<String, MutableSet<String>>()
 
-        while (cursor < end) {
-            val remaining = end - cursor
-            if (remaining < 20) break
+            while (cursor < end) {
+                val remaining = end - cursor
+                if (remaining < 20) break
 
-            if (!lunchAdded && cursor in (12 * 60)..(13 * 60 + 45) && remaining >= 45) {
-                val duration = min(60, remaining)
-                result += TaskBlock(cursor, cursor + duration, "Makan + istirahat beneran", "Break", isBreak = true)
+                if (!lunchAdded && cursor in (12 * 60)..(13 * 60 + 45) && remaining >= 45) {
+                    val duration = min(60, remaining)
+                    result += TaskBlock(
+                        cursor,
+                        cursor + duration,
+                        "Makan + istirahat beneran",
+                        "Break",
+                        isBreak = true
+                    )
+                    cursor += duration
+                    lunchAdded = true
+                    workSinceBreak = 0
+                    continue
+                }
+
+                if (workSinceBreak >= 105 && remaining >= 30) {
+                    val duration = if (energy == "Low") 30 else 15
+                    result += TaskBlock(
+                        cursor,
+                        cursor + duration,
+                        "Phone-free break",
+                        "Break",
+                        isBreak = true
+                    )
+                    cursor += duration
+                    workSinceBreak = 0
+                    continue
+                }
+
+                val category = categories[categoryIndex % categories.size]
+                categoryIndex++
+                val duration = min(durationChoices(energy, category).random(random), remaining)
+                if (duration < 20) break
+
+                val used = usedByCategory.getOrPut(category) { mutableSetOf() }
+                val guardedPool = poolFor(category)
+                val freshCandidates = guardedPool.filterNot { it in used }
+                val fallbackCandidates = activityPoolV2(category).filterNot { it in used }
+                val candidates = when {
+                    freshCandidates.isNotEmpty() -> freshCandidates
+                    fallbackCandidates.isNotEmpty() -> fallbackCandidates
+                    else -> activityPoolV2(category)
+                }
+                if (candidates.isEmpty()) break
+
+                val title = candidates.random(random)
+                used += title
+
+                result += TaskBlock(cursor, cursor + duration, title, category)
                 cursor += duration
-                lunchAdded = true
-                workSinceBreak = 0
-                continue
+                workSinceBreak += duration
             }
 
-            if (workSinceBreak >= 105 && remaining >= 30) {
-                val duration = if (energy == "Low") 30 else 15
-                result += TaskBlock(cursor, cursor + duration, "Phone-free break", "Break", isBreak = true)
-                cursor += duration
-                workSinceBreak = 0
-                continue
+            if (end - cursor >= 15) {
+                val wrapCategory = if (focus == "Mixed") "Personal" else focus
+                result += TaskBlock(
+                    cursor,
+                    end,
+                    "Daily wrap-up: catat progress dan siapkan langkah berikutnya",
+                    wrapCategory
+                )
             }
-
-            val category = categories[categoryIndex % categories.size]
-            categoryIndex++
-            val duration = min(durationChoices(energy, category).random(random), remaining)
-            if (duration < 20) break
-
-            val used = usedByCategory.getOrPut(category) { mutableSetOf() }
-            val pool = poolFor(category)
-            val available = pool.filterNot { it in used }.ifEmpty {
-                used.clear()
-                pool
-            }
-            val title = available.random(random)
-            used += title
-
-            result += TaskBlock(cursor, cursor + duration, title, category)
-            cursor += duration
-            workSinceBreak += duration
         }
-
-        if (end - cursor >= 15) {
-            result += TaskBlock(cursor, end, "Daily wrap-up: catat progress dan siapkan besok", "Personal")
-        }
+    } finally {
+        RandomizerGuard.endGenerate()
     }
 
     return DayPlan(
@@ -295,8 +260,22 @@ fun generateDay(
 class NgeStore(context: Context) {
     private val prefs = context.getSharedPreferences("ngeproduktif_v04", Context.MODE_PRIVATE)
 
+    init {
+        RandomizerGuard.restore(
+            savedCycle = prefs.getInt("randomizer_cycle", 0),
+            raw = prefs.getString("randomizer_last_used", null)
+        )
+    }
+
     fun savePlan(plan: DayPlan) {
         prefs.edit().putString("today_plan", planToJson(plan).toString()).apply()
+
+        RandomizerGuard.markSelected(
+            plan.tasks
+                .filter { !it.isBreak }
+                .map { it.title }
+        )
+        persistRandomizerState()
         updateHistory(plan)
     }
 
@@ -352,6 +331,13 @@ class NgeStore(context: Context) {
                 }
             }.sortedByDescending { it.date }
         }.getOrDefault(emptyList())
+    }
+
+    private fun persistRandomizerState() {
+        prefs.edit()
+            .putInt("randomizer_cycle", RandomizerGuard.cycle)
+            .putString("randomizer_last_used", RandomizerGuard.snapshotJson())
+            .apply()
     }
 
     private fun updateHistory(plan: DayPlan) {
