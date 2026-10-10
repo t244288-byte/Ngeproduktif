@@ -12,8 +12,8 @@ android {
         applicationId = "com.nalar.reroll"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.4.1"
+        versionCode = 6
+        versionName = "0.4.2"
     }
 
     buildFeatures {
@@ -31,9 +31,7 @@ android {
     }
 }
 
-// v0.4.1 hotfix: the label inside BrandFilterChip uses fillMaxWidth().
-// Energy and Clock-out chips previously had no Row weight, so the first chip
-// consumed the whole row on phones. Apply equal weights before Kotlin compile.
+// Hotfix retained from v0.4.1: equal-width setup chips on phones.
 val patchSetupChipLayout by tasks.registering {
     doLast {
         val source = file("src/main/java/com/nalar/reroll/AppUi.kt")
