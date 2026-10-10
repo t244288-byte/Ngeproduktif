@@ -12,8 +12,8 @@ android {
         applicationId = "com.nalar.reroll"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "0.4.3"
+        versionCode = 8
+        versionName = "0.4.4"
     }
 
     buildFeatures {
@@ -31,22 +31,26 @@ android {
     }
 }
 
-// v0.4.3 UI hotfix. BrandFilterChip makes its label fill the chip width,
-// so chips in a Row must have explicit weights. We also expose evening
-// clock-out choices through 23:00 so the app remains usable later at night.
-val patchSetupChipLayout by tasks.registering {
+// v0.4.4 source patch:
+// - retain equal-width Energy chips and extended Clock-out choices
+// - add Seek Job to setup/profile UI and category styling
+// - route the randomizer through ActivityLibraryV3 (60 Seek Job activities)
+// - include Seek Job inside Mixed mode
+val patchV044Sources by tasks.registering {
     doLast {
-        val source = file("src/main/java/com/nalar/reroll/AppUi.kt")
-        if (!source.exists()) return@doLast
+        val ui = file("src/main/java/com/nalar/reroll/AppUi.kt")
+        val core = file("src/main/java/com/nalar/reroll/Core.kt")
+        val main = file("src/main/java/com/nalar/reroll/MainActivity.kt")
 
-        var code = source.readText()
+        if (ui.exists()) {
+            var code = ui.readText()
 
-        code = code.replace(
-            "BrandFilterChip(selected = energy == it, text = it, onClick = { onEnergyChange(it) })",
-            "BrandFilterChip(modifier = Modifier.weight(1f), selected = energy == it, text = it, onClick = { onEnergyChange(it) })"
-        )
+            code = code.replace(
+                "BrandFilterChip(selected = energy == it, text = it, onClick = { onEnergyChange(it) })",
+                "BrandFilterChip(modifier = Modifier.weight(1f), selected = energy == it, text = it, onClick = { onEnergyChange(it) })"
+            )
 
-        val oldClock = """Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            val oldClock = """Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf(16, 17, 18, 19).forEach { hour ->
                         BrandFilterChip(
                             selected = endHour == hour,
@@ -56,7 +60,7 @@ val patchSetupChipLayout by tasks.registering {
                     }
                 }"""
 
-        val newClock = """Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            val newClock = """Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     listOf(16, 17, 18, 19, 20, 21, 22, 23).chunked(4).forEach { row ->
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             row.forEach { hour ->
@@ -70,23 +74,72 @@ val patchSetupChipLayout by tasks.registering {
                         }
                     }
                 }"""
-        code = code.replace(oldClock, newClock)
-        code = code.replace("Text(\"v0.4\"", "Text(\"v0.4.3\"")
+            code = code.replace(oldClock, newClock)
 
-        check(code.contains("modifier = Modifier.weight(1f), selected = energy == it")) {
-            "Energy chip hotfix did not apply"
-        }
-        check(code.contains("listOf(16, 17, 18, 19, 20, 21, 22, 23).chunked(4)")) {
-            "Clock-out hotfix did not apply"
+            code = code.replace(
+                "listOf(\"Mixed\", \"Career\", \"Skill\", \"Side Hustle\", \"Health\", \"Personal\")",
+                "listOf(\"Mixed\", \"Seek Job\", \"Career\", \"Skill\", \"Side Hustle\", \"Health\", \"Personal\")"
+            )
+
+            code = code.replace(
+                "private fun categoryColor(category: String): Color = when (category) {\n    \"Career\" -> BrandOrange",
+                "private fun categoryColor(category: String): Color = when (category) {\n    \"Seek Job\" -> Color(0xFF0F9D8A)\n    \"Career\" -> BrandOrange"
+            )
+
+            code = code.replace(
+                "\"Fokus boleh satu, jadwal tetap seimbang.\"",
+                "\"Pilih mode aktivitas utama hari ini.\""
+            )
+
+            code = code.replace("Text(\"v0.4\"", "Text(\"v0.4.4\"")
+
+            check(code.contains("modifier = Modifier.weight(1f), selected = energy == it")) {
+                "Energy chip fix did not apply"
+            }
+            check(code.contains("listOf(16, 17, 18, 19, 20, 21, 22, 23).chunked(4)")) {
+                "Clock-out fix did not apply"
+            }
+            check(code.contains("\"Seek Job\"")) {
+                "Seek Job UI patch did not apply"
+            }
+
+            ui.writeText(code)
         }
 
-        source.writeText(code)
+        if (core.exists()) {
+            var code = core.readText()
+            code = code.replace("activityPoolV2(category)", "activityPoolV3(category)")
+            code = code.replace(
+                "\"Career\" -> listOf(\"Career\")\n    \"Skill\" -> listOf(\"Skill\")",
+                "\"Seek Job\" -> listOf(\"Seek Job\")\n    \"Career\" -> listOf(\"Career\")\n    \"Skill\" -> listOf(\"Skill\")"
+            )
+            code = code.replace(
+                "else -> listOf(\"Career\", \"Skill\", \"Side Hustle\", \"Health\", \"Personal\")",
+                "else -> listOf(\"Seek Job\", \"Career\", \"Skill\", \"Side Hustle\", \"Health\", \"Personal\")"
+            )
+
+            check(code.contains("\"Seek Job\" -> listOf(\"Seek Job\")")) {
+                "Seek Job focus routing patch did not apply"
+            }
+            check(!code.contains("activityPoolV2(category)")) {
+                "Core still uses V2 activity pool"
+            }
+
+            core.writeText(code)
+        }
+
+        if (main.exists()) {
+            var code = main.readText()
+            code = code.replace("totalActivityCountV2()", "totalActivityCountV3()")
+            code = code.replace("activityCountV2(\"Career\")", "activityCountV3(\"Career\")")
+            main.writeText(code)
+        }
     }
 }
 
 tasks.configureEach {
     if (name.startsWith("compile") && name.endsWith("Kotlin")) {
-        dependsOn(patchSetupChipLayout)
+        dependsOn(patchV044Sources)
     }
 }
 
