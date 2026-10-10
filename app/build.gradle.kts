@@ -12,8 +12,8 @@ android {
         applicationId = "com.nalar.reroll"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "0.4.0"
+        versionCode = 5
+        versionName = "0.4.1"
     }
 
     buildFeatures {
@@ -28,6 +28,36 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+}
+
+// v0.4.1 hotfix: the label inside BrandFilterChip uses fillMaxWidth().
+// Energy and Clock-out chips previously had no Row weight, so the first chip
+// consumed the whole row on phones. Apply equal weights before Kotlin compile.
+val patchSetupChipLayout by tasks.registering {
+    doLast {
+        val source = file("src/main/java/com/nalar/reroll/AppUi.kt")
+        if (!source.exists()) return@doLast
+
+        var code = source.readText()
+
+        code = code.replace(
+            """listOf(\"Low\", \"Normal\", \"High\").forEach {\n                        BrandFilterChip(selected = energy == it, text = it, onClick = { onEnergyChange(it) })\n                    }""",
+            """listOf(\"Low\", \"Normal\", \"High\").forEach { option ->\n                        BrandFilterChip(\n                            modifier = Modifier.weight(1f),\n                            selected = energy == option,\n                            text = option,\n                            onClick = { onEnergyChange(option) }\n                        )\n                    }"""
+        )
+
+        code = code.replace(
+            """BrandFilterChip(\n                            selected = endHour == hour,\n                            text = String.format(\"%02d:00\", hour),\n                            onClick = { onEndHourChange(hour) }\n                        )""",
+            """BrandFilterChip(\n                            modifier = Modifier.weight(1f),\n                            selected = endHour == hour,\n                            text = String.format(\"%02d:00\", hour),\n                            onClick = { onEndHourChange(hour) }\n                        )"""
+        )
+
+        source.writeText(code)
+    }
+}
+
+tasks.configureEach {
+    if (name.startsWith("compile") && name.endsWith("Kotlin")) {
+        dependsOn(patchSetupChipLayout)
     }
 }
 
